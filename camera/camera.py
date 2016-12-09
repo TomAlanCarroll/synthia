@@ -36,23 +36,23 @@ def camera_detect_motion():
     # capture control image
     img1, img_buffer1 = camera_capture()
 
-    while True:
-        time.sleep(CAPTURE_WAIT_TIME)
+    # while True:
+    time.sleep(CAPTURE_WAIT_TIME)
 
-        # capture different image
-        img2, img_buffer2 = camera_capture()
+    # capture different image
+    img2, img_buffer2 = camera_capture()
 
-        # determine difference
-        pxs_delta = 0
-        for x in xrange(0, CAMERA_RESOLUTION_X):
-            for y in xrange(0, CAMERA_RESOLUTION_Y):
-                px_delta = abs(img_buffer1[x, y][1] - img_buffer2[x, y][1])
-                if px_delta > CAPTURE_PX_DELTA_THRESHOLD:
-                    pxs_delta += 1
+    # determine difference
+    pxs_delta = 0
+    for x in xrange(0, CAMERA_RESOLUTION_X):
+        for y in xrange(0, CAMERA_RESOLUTION_Y):
+            px_delta = abs(img_buffer1[x, y][1] - img_buffer2[x, y][1])
+            if px_delta > CAPTURE_PX_DELTA_THRESHOLD:
+                pxs_delta += 1
 
-        # if we see enough of a difference, break out of the loop
-        if pxs_delta > CAPTURE_PXS_DELTA_THRESHOLD:
-            break
+    # if we see enough of a difference, break out of the loop
+    # if pxs_delta > CAPTURE_PXS_DELTA_THRESHOLD:
+    #     break
 
     # this function should return when motion is detected
     return True
