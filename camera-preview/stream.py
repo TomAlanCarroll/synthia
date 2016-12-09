@@ -36,19 +36,13 @@ class StreamingHttpHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.send_response(301)
-            self.send_header('Location', '/assets/index.html')
+            self.send_header('Location', '/camera-preview/assets/index.html')
             self.end_headers()
             return
-        elif self.path == '/assets/jquery-3.0.0.js':
-            content_type = 'application/javascript'
-            content = self.server.jquery
-        elif self.path == '/assets/jsmpg.js':
+        elif self.path == '/camera-preview/assets/jsmpg.js':
             content_type = 'application/javascript'
             content = self.server.jsmpg_content
-        elif self.path == '/assets/setup.js':
-            content_type = 'application/javascript'
-            content = self.server.setup
-        elif self.path == '/assets/index.html':
+        elif self.path == '/camera-preview/assets/index.html':
             content_type = 'text/html; charset=utf-8'
             tpl = Template(self.server.index_template)
             content = tpl.safe_substitute(dict(
@@ -73,12 +67,9 @@ class StreamingHttpServer(HTTPServer):
                 ('', HTTP_PORT), StreamingHttpHandler)
         with io.open('assets/index.html', 'r') as f:
             self.index_template = f.read()
-        with io.open('assets/jquery-3.0.0.js', 'r') as f:
             self.jquery = f.read()
         with io.open('assets/jsmpg.js', 'r') as f:
             self.jsmpg_content = f.read()
-        with io.open('assets/setup.js', 'r') as f:
-            self.setup = f.read()
 
 
 class StreamingWebSocket(WebSocket):
