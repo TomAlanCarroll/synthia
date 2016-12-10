@@ -51,6 +51,7 @@ def get_current_weather_reminder_message(current_weather):
 def play_evening_message():
     message = get_welcome_home_message()
     play_audio.play_message(message)
+    play_song()
 
 
 # Get a custom welcome home message
