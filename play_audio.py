@@ -19,7 +19,7 @@ def play_audio_file(audio_file):
     # convert m4a file to mp3
     if extension == ".m4a":
         m4a_audio_file = audio_file
-        audio_file = file_name + ".mp3"
+        audio_file = "/tmp/audio.mp3"
         call(["ffmpeg", "-i", m4a_audio_file, audio_file])
 
     # linux2 matches RPi system
