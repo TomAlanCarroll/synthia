@@ -11,6 +11,8 @@ def play_audio_file(audio_file):
     Plays audio file default audio device
     """
 
+    print "Input audio file: " + audio_file
+
     file_name = os.path.splitext(audio_file)[0]
     extension = os.path.splitext(audio_file)[1]
     print "file name: " + file_name
@@ -20,14 +22,19 @@ def play_audio_file(audio_file):
     if extension == ".m4a":
         m4a_audio_file = audio_file
         audio_file = "/tmp/audio.mp3"
+
+        print "converting file..."
         call(["ffmpeg", "-i", m4a_audio_file, audio_file])
+        print "done converting file."
 
     # linux2 matches RPi system
     if sys.platform == "linux2":
         # using shell call as quick a dirty way to play mp3 on a raspberry pi
+        print "playing audio file: " + audio_file
         call(["mpg321", audio_file])
 
     else:
+        print "playing audio file: " + audio_file
         playsound(audio_file)
 
 
