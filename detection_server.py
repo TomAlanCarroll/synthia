@@ -12,6 +12,7 @@ import json
 import time
 import cv2
 import datetime
+import synthia
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -42,14 +43,8 @@ morning_start = datetime.time(morning_time_min)
 morning_end = datetime.time(morning_time_max)
 evening_start = datetime.time(evening_time_min)
 evening_end = datetime.time(evening_time_max)
-
-def on_morning_event():
-    print "morning"
-    #todo: call play_morning_message
-
-def on_evening_event():
-    print "evening"
-    #todo: call play_welcome_home_message
+morning_message_played = 0
+evening_message_played = 0
 
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
@@ -106,11 +101,13 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
 
     # check to see if the room is opening
-    if text == "Opening" and morning_start <= datetime.datetime.now() <= morning_end:
-        on_morning_event()
+    if text == "Opening" and morning_start <= datetime.datetime.now() <= morning_end and morning_message_played < 1:
+        synthia.play_morning_message()
+        morning_message_played = 1
 
-    if text == "Opening" and evening_start <= datetime.datetime.now() <= evening_end:
-        on_evening_event()
+    if text == "Opening" and evening_start <= datetime.datetime.now() <= evening_end and evening_message_played < 1:
+        synthia.play_evening_message()
+        evening_message_played = 1
 
 
     # draw the text and timestamp on the frame

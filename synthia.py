@@ -48,7 +48,7 @@ def get_current_weather_reminder_message(current_weather):
 
 
 # Play a welcome home message
-def play_welcome_home_message():
+def play_evening_message():
     message = get_welcome_home_message()
     play_audio.play_message(message)
 
