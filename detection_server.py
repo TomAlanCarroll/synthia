@@ -11,6 +11,7 @@ import imutils
 import json
 import time
 import cv2
+import dateutil.parser
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -29,6 +30,14 @@ camera = PiCamera()
 camera.resolution = tuple(conf["resolution"])
 camera.framerate = conf["fps"]
 rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
+morning_time_min = dateutil.parser.parse(conf["morning_time_min"])
+morning_time_max = dateutil.parser.parse(conf["morning_time_max"])
+morning_reminder_message = conf["morning_reminder_message"]
+evening_time_min = dateutil.parser.parse(conf["evening_time_min"])
+evening_time_max = dateutil.parser.parse(conf["evening_time_max"])
+evening_song_path = conf["evening_song_path"]
+city = conf["city"]
+postal_code = conf["postal_code"]
 
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
