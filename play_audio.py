@@ -1,4 +1,6 @@
 import sys
+import os.path
+import os
 from gtts import gTTS
 from subprocess import call
 from playsound import playsound
@@ -8,6 +10,18 @@ def play_audio_file(audio_file):
     """
     Plays audio file default audio device
     """
+
+    file_name = os.path.splitext(audio_file)[0]
+    extension = os.path.splitext(audio_file)[1]
+    print "file name: " + file_name
+    print "extension: " + extension
+
+    # convert m4a file to mp3
+    if extension == ".m4a":
+        m4a_audio_file = audio_file
+        audio_file = file_name + ".mp3"
+        call(["ffmpeg", "-i", m4a_audio_file, audio_file])
+
     # linux2 matches RPi system
     if sys.platform == "linux2":
         # using shell call as quick a dirty way to play mp3 on a raspberry pi
