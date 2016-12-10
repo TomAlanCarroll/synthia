@@ -1,16 +1,14 @@
-# from flask import Flask, weather, requests, json
-# app = Flask(__name__)
-#
-#
-# @app.route('/')
-# def hello_world():
-#     return 'Hello, my name is Synthia, the Synthetic Intelligent Assistant for your home'
-#
-#
-# @app.route('/get_morning_message', methods=['POST'])
+from flask import Flask, weather, requests, json, play_message
+from playsound import playsound
+app = Flask(__name__)
+
+# Calls a function to get a customer morning message, then plays it
+@app.route('/play_morning_message', methods=['POST'])
+def play_morning_message():
+    message = get_morning_message()
+    play_message.play_message(message)
 
 # Gets a custom morning message with helpful tips to start your day
-import weather, requests, json, play_message
 def get_morning_message():
     message = 'Good morning! '
 
@@ -23,13 +21,13 @@ def get_morning_message():
     current_weather_desc = weather_data[0].get('description')
 
     if current_weather:
-        message += 'The current weather is ' + current_weather_desc + ". "
+        message += 'The current weather is ' + current_weather_desc + " in Berlin. "
         current_weather_reminder_message = get_current_weather_reminder_message(current_weather)
 
         if current_weather_reminder_message:
             message += current_weather_reminder_message
 
-    message += 'Have a nice day!'
+    message += 'Have a nice day and don\'t forget your keys!'
 
     return message
 
@@ -40,10 +38,17 @@ def get_current_weather_reminder_message(current_weather):
         weather.SUNNY: 'You should wear sunglasses. ',
     }.get(current_weather, '')
 
-
-# Calls a function to get a customer morning message, then plays it
-def play_morning_message():
-    message = get_morning_message()
+# Play a welcome home message
+@app.route('/play_welcome_home_message', methods=['POST'])
+def play_welcome_home_message():
+    message = get_welcome_home_message()
     play_message.play_message(message)
 
-print play_morning_message();
+# Get a custom welcome home message
+def get_welcome_home_message():
+    return 'Welcome home, Tom'
+
+# Play a mp3 or m4a file
+def play_song():
+    audio_file = "songs/evening.m4a"
+    playsound(audio_file)

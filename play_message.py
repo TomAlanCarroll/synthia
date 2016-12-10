@@ -4,7 +4,7 @@ from subprocess import call
 from playsound import playsound
 
 
-def play_message(message, language="en-us"):
+def play_message(message, language="en"):
     """
     Plays message as audio through default audio device
     """
