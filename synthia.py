@@ -1,4 +1,5 @@
-from flask import Flask, weather, requests, json, play_message
+from flask import Flask
+import weather, requests, json, play_message
 from playsound import playsound
 app = Flask(__name__)
 
