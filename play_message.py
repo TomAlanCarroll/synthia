@@ -1,11 +1,15 @@
-import sys
 from gtts import gTTS
-from playsound import playsound
+from subprocess import call
 
 
-# This function takes a message and language(accent) and plays sound
-def play_message(message=sys.argv[1], language="en-us"):
+def play_message(message, language="en-us"):
+    """
+    Plays message as audio through default audio device
+    """
     audio_file = "/tmp/audio.mp3"
     text_to_message = gTTS(message, language)
     text_to_message.save(audio_file)
-    playsound(audio_file)
+
+    # using shell call as quick a dirty way to play mp3 on a raspberry pi
+    call(["omxplayer",audio_file])
+
