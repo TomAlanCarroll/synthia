@@ -11,7 +11,7 @@ import imutils
 import json
 import time
 import cv2
-import dateutil.parser
+import datetime
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -30,14 +30,26 @@ camera = PiCamera()
 camera.resolution = tuple(conf["resolution"])
 camera.framerate = conf["fps"]
 rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
-morning_time_min = dateutil.parser.parse(conf["morning_time_min"])
-morning_time_max = dateutil.parser.parse(conf["morning_time_max"])
+morning_time_min = conf["morning_time_min"]
+morning_time_max = conf["morning_time_max"]
 morning_reminder_message = conf["morning_reminder_message"]
-evening_time_min = dateutil.parser.parse(conf["evening_time_min"])
-evening_time_max = dateutil.parser.parse(conf["evening_time_max"])
+evening_time_min = conf["evening_time_min"]
+evening_time_max = conf["evening_time_max"]
 evening_song_path = conf["evening_song_path"]
 city = conf["city"]
 postal_code = conf["postal_code"]
+morning_start = datetime.time(morning_time_min)
+morning_end = datetime.time(morning_time_max)
+evening_start = datetime.time(evening_time_min)
+evening_end = datetime.time(evening_time_max)
+
+def on_morning_event():
+    print "morning"
+    #todo: call play_morning_message
+
+def on_evening_event():
+    print "evening"
+    #todo: call play_welcome_home_message
 
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
@@ -92,6 +104,15 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         text = "Opening"
 
+
+    # check to see if the room is opening
+    if text == "Opening" and morning_start <= datetime.datetime.now() <= morning_end:
+        on_morning_event()
+
+    if text == "Opening" and evening_start <= datetime.datetime.now() <= evening_end:
+        on_evening_event()
+
+
     # draw the text and timestamp on the frame
     ts = timestamp.strftime("%A %d %B %Y %I:%M:%S%p")
     cv2.putText(frame, "Door Status: {}".format(text), (10, 20),
@@ -99,7 +120,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX,
                 0.35, (0, 0, 255), 1)
 
-    # check to see if the room is opening
+    # check to see if the room is opening for stream
     if text == "Opening":
         # check to see if enough time has passed between uploads
         if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
@@ -145,4 +166,3 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
-
