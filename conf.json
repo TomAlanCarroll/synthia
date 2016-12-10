@@ -10,5 +10,12 @@
 	"delta_thresh": 5,
 	"resolution": [640, 480],
 	"fps": 20,
-	"min_area": 5000
+	"min_area": 5000,
+	"morning_time_min time": "06:00:00+01:00",
+  	"morning_time_max time": "10:00:00+01:00",
+    "morning_reminder_message text": "Don't forget your keys",
+	"evening_time_min time": "18:00:00+01:00",
+  	"evening_time_max time": "23:00:00+01:00",,
+  	"evening_song text": "songs/evening.m4a",
+  	"current_city text": "Berlin"
 }

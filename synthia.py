@@ -1,10 +1,15 @@
+"""
+    Synthia
+    ~~~~~~
+    The Synthetic Intelligent Assistant for your home
+"""
 from flask import Flask
-import weather, requests, json, play_message
 from playsound import playsound
+import weather, requests, json, play_message
+
 app = Flask(__name__)
 
 # Calls a function to get a customer morning message, then plays it
-@app.route('/play_morning_message', methods=['POST'])
 def play_morning_message():
     message = get_morning_message()
     play_message.play_message(message)
@@ -40,14 +45,13 @@ def get_current_weather_reminder_message(current_weather):
     }.get(current_weather, '')
 
 # Play a welcome home message
-@app.route('/play_welcome_home_message', methods=['POST'])
 def play_welcome_home_message():
     message = get_welcome_home_message()
     play_message.play_message(message)
 
 # Get a custom welcome home message
 def get_welcome_home_message():
-    return 'Welcome home, Tom'
+    return 'Welcome home.'
 
 # Play a mp3 or m4a file
 def play_song():
