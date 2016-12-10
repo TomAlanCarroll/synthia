@@ -62,4 +62,4 @@ def get_welcome_home_message():
 # Play a mp3 or m4a file
 def play_song():
     audio_file = "songs/evening.m4a"
-    play_audio(audio_file)
+    play_audio.play_audio_file(audio_file)
