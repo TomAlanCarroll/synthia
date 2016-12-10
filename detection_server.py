@@ -101,20 +101,20 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
 
     # check to see if the room is opening
-    if text == "Opening" and morning_start <= datetime.datetime.now() <= morning_end \
+    if text == "Opening" and morning_start <= timestamp.now() <= morning_end \
             and morning_message_played < 1:
         synthia.play_morning_message()
         morning_message_played = 1
 
-    if text == "Opening" and evening_start <= datetime.datetime.now() <= evening_end \
+    if text == "Opening" and evening_start <= timestamp.now() <= evening_end \
             and evening_message_played < 1:
         synthia.play_evening_message()
         evening_message_played = 1
 
-    if not morning_start <= datetime.datetime.now() <= morning_end:
+    if not morning_start <= timestamp.now() <= morning_end:
         morning_message_played = 0
 
-    if not evening_start <= datetime.datetime.now() <= evening_end:
+    if not evening_start <= timestamp.now() <= evening_end:
         evening_message_played = 0
 
     # draw the text and timestamp on the frame
