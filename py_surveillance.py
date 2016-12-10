@@ -32,7 +32,7 @@ rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
 
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
-print "[INFO] warming up..."
+print "[INFO] Starting camera server..."
 time.sleep(conf["camera_warmup_time"])
 avg = None
 lastUploaded = datetime.datetime.now()
@@ -41,10 +41,10 @@ motionCounter = 0
 # capture frames from the camera
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     # grab the raw NumPy array representing the image and initialize
-    # the timestamp and occupied/unoccupied text
+    # the timestamp and status text
     frame = f.array
     timestamp = datetime.datetime.now()
-    text = "Unoccupied"
+    text = "No movement"
 
     # resize the frame, convert it to grayscale, and blur it
     frame = imutils.resize(frame, width=500)
@@ -53,7 +53,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
     # if the average frame is None, initialize it
     if avg is None:
-        print "[INFO] starting background model..."
+        print "[INFO] Starting camera framing..."
         avg = gray.copy().astype("float")
         rawCapture.truncate(0)
         continue
@@ -81,17 +81,17 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         # and update the text
         (x, y, w, h) = cv2.boundingRect(c)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        text = "Occupied"
+        text = "Opening"
 
     # draw the text and timestamp on the frame
     ts = timestamp.strftime("%A %d %B %Y %I:%M:%S%p")
-    cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
+    cv2.putText(frame, "Door Status: {}".format(text), (10, 20),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX,
                 0.35, (0, 0, 255), 1)
 
-    # check to see if the room is occupied
-    if text == "Occupied":
+    # check to see if the room is opening
+    if text == "Opening":
         # check to see if enough time has passed between uploads
         if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
             # increment the motion counter
@@ -120,7 +120,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                 lastUploaded = timestamp
                 motionCounter = 0
 
-    # otherwise, the room is not occupied
+    # otherwise, the door is not opening
     else:
         motionCounter = 0
 
