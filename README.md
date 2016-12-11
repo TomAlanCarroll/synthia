@@ -30,7 +30,7 @@ Synthia is written in Python 2.7.
     # NOTE: The directory of cv2.so may be different depending on how you installed OpenCV
     ln -s ~/.virtualenvs/cv/lib/python2.7/site-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/cv2.so
     ```
-1. Install mpg321 on the Rasperry Pi
+1. Install `mpg321` on the Rasperry Pi
     ```bash
     sudo apt-get install mpg321
     ```
