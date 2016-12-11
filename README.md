@@ -1,6 +1,6 @@
 # Welcome Home with Synthia
 
-*Authors: [https://github.com/gkhorn978](Geoff Khorn), [https://github.com/sarahes](Sarah Carroll), and [https://github.com/TomAlanCarroll](Tom Carroll)*
+*Authors: [Geoff Khorn](https://github.com/gkhorn978), [Sarah Carroll](https://github.com/sarahes), and [Tom Carroll](https://github.com/TomAlanCarroll)*
 
 Synthia is a Synthetic Intelligent Assistant for your home.
 
