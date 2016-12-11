@@ -1,6 +1,6 @@
 # Welcome Home with Synthia
 
-*Authors: Geoff Khorn, Sarah Carroll, and Tom Carroll*
+*Authors: [https://github.com/gkhorn978](Geoff Khorn), [https://github.com/sarahes](Sarah Carroll), and [https://github.com/TomAlanCarroll](Tom Carroll)*
 
 Synthia is a Synthetic Intelligent Assistant for your home.
 
@@ -14,6 +14,7 @@ Synthia is written in Python 2.7.
 1. Raspberry Pi 3 Model B with Raspbian Jessie
 1. Pi NoIR camera
 1. Bluetooth speaker (or 3.5mm powered speaker)
+<div align="center">![Raspberry Pi and Speaker](synthia.jpg)</div>
 
 ## Setup
 1. Install Python 2.7 on Raspberry Pi
