@@ -20,13 +20,18 @@ Synthia is written in Python 2.7.
 1. Install OpenCV on the Raspberry Pi with [OpenCV-for-Pi](https://github.com/jabelone/OpenCV-for-Pi) (or if you want to compile OpenCV on the Pi: http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3)
 1. Install `virtualenv` for Python if you have not already done so.
 1. Run the following commands to setup `virtualenv` within this repository folder on the Raspberry Pi:
-```bash
-# Setup virtualenv and install pip modules:
-virtualenv --no-site-packages synthia-virtualenv
-source synthia-virtualenv/bin/activate
-pip install -r requirements.txt
-
-# A symlink is needed to use cv2 in Python:
-# NOTE: The directory of cv2.so may be different depending on how you installed OpenCV
-ln -s ~/.virtualenvs/cv/lib/python2.7/site-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/cv2.so
-```
+    ```bash
+    # Setup virtualenv and install pip modules:
+    virtualenv --no-site-packages synthia-virtualenv
+    source synthia-virtualenv/bin/activate
+    pip install -r requirements.txt
+    
+    # A symlink is needed to use cv2 in Python:
+    # NOTE: The directory of cv2.so may be different depending on how you installed OpenCV
+    ln -s ~/.virtualenvs/cv/lib/python2.7/site-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/cv2.so
+    ```
+1. Install mpg321 on the Rasperry Pi
+    ```bash
+    sudo apt-get install mpg321
+    ```
+1. Configure the desired audio output device as the system's default on the Raspberry Pi
