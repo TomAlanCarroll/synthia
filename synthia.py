@@ -8,7 +8,6 @@ import weather, requests, json, play_audio
 
 app = Flask(__name__)
 
-
 # Calls a function to get a customer morning message, then plays it
 def play_morning_message():
     message = get_morning_message()
@@ -41,10 +40,13 @@ def get_morning_message():
 
 # Returns a message based off the current weather
 def get_current_weather_reminder_message(current_weather):
-    return {
-        weather.DRIZZLE or weather.RAINING: 'Don\'t forget your umbrella. ',
-        weather.SUNNY: 'You should wear sunglasses. ',
-    }.get(current_weather, '')
+    if current_weather == weather.DRIZZLE or current_weather == weather.RAIN:
+        return 'You should bring an umbrella. '
+
+    if current_weather == weather.SUNNY:
+        return 'You should wear sunglasses. '
+
+    return ''
 
 
 # Play a welcome home message
@@ -55,11 +57,17 @@ def play_evening_message():
 
 
 # Get a custom welcome home message
-def get_welcome_home_message():
-    return 'Welcome home.'
+def get_welcome_home_message(name = ''):
+    message = 'Welcome home'
+
+    if name:
+      message += ', ' + name
+
+    return message
 
 
-# Play a mp3 or m4a file
+# Play a mp3 music file
 def play_song():
     audio_file = "songs/evening.mp3"
     play_audio.play_audio_file(audio_file)
+
