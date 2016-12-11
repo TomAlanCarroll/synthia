@@ -30,10 +30,6 @@ def get_morning_message():
         message += 'The current weather is ' + current_weather_desc + " in Berlin. "
         current_weather_reminder_message = get_current_weather_reminder_message(current_weather)
 
-        print(current_weather)
-        print(weather.RAIN)
-        print(current_weather_reminder_message)
-
         if current_weather_reminder_message:
             message += current_weather_reminder_message
 
