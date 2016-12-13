@@ -1,6 +1,6 @@
 # Welcome Home with Synthia
 
-*Authors: Geoff Khorn, Sarah Carroll, and Tom Carroll*
+*Authors: [Geoff Khorn](https://github.com/gkhorn978), [Sarah Carroll](https://github.com/sarahes), and [Tom Carroll](https://github.com/TomAlanCarroll)*
 
 Synthia is a Synthetic Intelligent Assistant for your home.
 
@@ -14,6 +14,7 @@ Synthia is written in Python 2.7.
 1. Raspberry Pi 3 Model B with Raspbian Jessie
 1. Pi NoIR camera
 1. Bluetooth speaker (or 3.5mm powered speaker)
+<div align="center">![Raspberry Pi and Speaker](synthia.jpg)</div>
 
 ## Setup
 1. Install Python 2.7 on Raspberry Pi
@@ -35,3 +36,10 @@ Synthia is written in Python 2.7.
     sudo apt-get install mpg321
     ```
 1. Configure the desired audio output device as the system's default on the Raspberry Pi
+
+# How to Run
+Execute the following line on the Raspberry Pi:
+```bash
+python synthia.py --conf conf.json
+```
+The default configuration is to each day execute exactly one morning event between 6:00 and 10:00  and exactly one welcome home event between 18:00 and 23:00. These times are relative to the current time on the Raspberry Pi.
