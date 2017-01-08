@@ -19,7 +19,7 @@ Synthia is written in Python 2.7.
 ## Setup
 1. Install Python 2.7 on Raspberry Pi
 1. Install OpenCV on the Raspberry Pi with [OpenCV-for-Pi](https://github.com/jabelone/OpenCV-for-Pi) (or if you want to compile OpenCV on the Pi: http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3)
-1. Install `virtualenv` for Python if you have not already done so.
+1. Install `virtualenv` for Python if you have not already done so by running `sudo pip install virtualenv`.
 1. Run the following commands to setup `virtualenv` within this repository folder on the Raspberry Pi:
     ```bash
     # Setup virtualenv and install pip modules:
