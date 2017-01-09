@@ -21,30 +21,30 @@ Synthia is written in Python 2.7.
 1. Install OpenCV on the Raspberry Pi with [OpenCV-for-Pi](https://github.com/jabelone/OpenCV-for-Pi) (or if you want to compile OpenCV on the Pi: http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3)
 1. Install `virtualenv` for Python if you have not already done so by running `sudo pip install virtualenv`.
 1. Run the following commands to setup `virtualenv` within this repository folder on the Raspberry Pi:
-```bash
-sudo apt-get install python-dev
+    ```bash
+    sudo apt-get install python-dev
 
-# Needed for text-to-speech
-sudo apt-get install mpg321
+    # Needed for text-to-speech
+    sudo apt-get install mpg321
 
-# Setup virtualenv (change directory to repository directory if you haven't already)
-virtualenv --no-site-packages synthia-virtualenv
-source synthia-virtualenv/bin/activate
+    # Setup virtualenv (change directory to repository directory if you haven't already)
+    virtualenv --no-site-packages synthia-virtualenv
+    source synthia-virtualenv/bin/activate
 
-# You may need portaudio19-dev because of PyAudio
-sudo apt-get install portaudio19-dev
-pip install --allow-unverified=pyaudio pyaudio
+    # You may need portaudio19-dev because of PyAudio
+    sudo apt-get install portaudio19-dev
+    pip install --allow-unverified=pyaudio pyaudio
 
-# Install pip modules (this could take a while):
-pip install -r requirements.txt
+    # Install pip modules (this could take a while):
+    pip install -r requirements.txt
 
-# Install OpenCV in virtualenv (OpenCV-for-Pi does not work in virtualenv by default)
-wget "https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb"
-dpkg -x latest-OpenCV.deb ./OpenCV
-cp OpenCV/usr/local/lib/python2.7/dist-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/
-rm latest-OpenCV.deb
-rm -rf OpenCV
-```
+    # Install OpenCV in virtualenv (OpenCV-for-Pi does not work in virtualenv by default)
+    wget "https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb"
+    dpkg -x latest-OpenCV.deb ./OpenCV
+    cp OpenCV/usr/local/lib/python2.7/dist-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/
+    rm latest-OpenCV.deb
+    rm -rf OpenCV
+    ```
 1. Configure the desired audio output device as the system's default on the Raspberry Pi
 
 # How to Run
