@@ -3,6 +3,7 @@
 """
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from gpiozero import MotionSensor
 import argparse
 import warnings
 import imutils
@@ -11,6 +12,9 @@ import time
 import cv2
 import datetime
 import synthia_controller
+
+# PIR output should be connected to GPIO 4
+pir = MotionSensor(4)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -50,8 +54,7 @@ avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
 
-# capture frames from the camera
-for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+def process_frame(f):
     # grab the raw NumPy array representing the image and initialize
     # the timestamp and status text
     frame = f.array
@@ -151,3 +154,8 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
+
+# Main control loop for processing camera images
+for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    if pir.motion_detected:
+        process_frame(f)
