@@ -14,7 +14,10 @@ import datetime
 import synthia_controller
 
 # PIR output should be connected to GPIO 4
-pir = MotionSensor(4)
+pir_sensor_detection = conf["pir_sensor_detection"]
+pir = None
+if pir_sensor_detection:
+    pir = MotionSensor(4)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -157,5 +160,5 @@ def process_frame(f):
 
 # Main control loop for processing camera images
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-    if pir.motion_detected:
+    if not pir_sensor_detection or (pir is not None and pir.motion_detected):
         process_frame(f)
