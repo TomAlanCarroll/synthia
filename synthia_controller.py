@@ -2,14 +2,14 @@
     Synthia Controller
 """
 from flask import Flask
-import weather, requests, json, play_audio
+import weather, requests, json, audio_controller
 
 app = Flask(__name__)
 
 # Calls a function to get a customer morning message, then plays it
 def play_morning_message():
     message = get_morning_message()
-    play_audio.play_message(message)
+    audio_controller.play_message(message)
 
 
 # Gets a custom morning message with helpful tips to start your day
@@ -50,7 +50,7 @@ def get_current_weather_reminder_message(current_weather):
 # Play a welcome home message
 def play_evening_message():
     message = get_welcome_home_message()
-    play_audio.play_message(message)
+    audio_controller.play_message(message)
     play_song()
 
 
@@ -67,5 +67,5 @@ def get_welcome_home_message(name = ''):
 # Play a mp3 music file
 def play_song():
     audio_file = "songs/evening.mp3"
-    play_audio.play_audio_file(audio_file)
+    audio_controller.play_audio_file(audio_file)
 
