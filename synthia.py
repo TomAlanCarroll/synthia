@@ -63,15 +63,15 @@ if pir is not None:
 
 # Main control loop for processing camera images
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    # grab the raw NumPy array representing the image and initialize
+    # the timestamp and status text
+    frame = f.array
+    timestamp = datetime.datetime.now()
+    text = "No movement"
+    # resize the frame
+    frame = imutils.resize(frame, width=500)
     if not pir_sensor_detection or (pir is not None and pir.motion_detected):
-        # grab the raw NumPy array representing the image and initialize
-        # the timestamp and status text
-        frame = f.array
-        timestamp = datetime.datetime.now()
-        text = "No movement"
-
-        # resize the frame, convert it to grayscale, and blur it
-        frame = imutils.resize(frame, width=500)
+        # convert it to grayscale and blur it
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
@@ -150,15 +150,15 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         else:
             motionCounter = 0
 
-        # check to see if the frames should be displayed to screen
-        if conf["show_video"]:
-            # display the security feed
-            cv2.imshow("Security Feed", frame)
-            key = cv2.waitKey(1) & 0xFF
+    # check to see if the frames should be displayed to screen
+    if conf["show_video"]:
+        # display the security feed
+        cv2.imshow("Security Feed", frame)
+        key = cv2.waitKey(1) & 0xFF
 
-            # if the `q` key is pressed, break from the lop
-            if key == ord("q"):
-                break
+        # if the `q` key is pressed, break from the lop
+        if key == ord("q"):
+            break
 
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
