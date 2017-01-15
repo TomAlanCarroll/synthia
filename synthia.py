@@ -27,6 +27,7 @@ conf = json.load(open(args["conf"]))
 pir_sensor_detection = conf["pir_sensor_detection"]
 pir = None
 if pir_sensor_detection:
+    print "[INFO] Initializing PIR sensor..."
     pir = MotionSensor(4)
 
 # initialize the camera and grab a reference to the raw camera capture
@@ -56,6 +57,9 @@ time.sleep(conf["camera_warmup_time"])
 avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
+
+if pir is not None:
+    print "[INFO] Waiting for PIR warmup..."
 
 # Main control loop for processing camera images
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -156,5 +160,5 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
             if key == ord("q"):
                 break
 
-        # clear the stream in preparation for the next frame
-        rawCapture.truncate(0)
+    # clear the stream in preparation for the next frame
+    rawCapture.truncate(0)
