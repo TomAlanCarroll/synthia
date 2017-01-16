@@ -1,19 +1,15 @@
-# Welcome Home with Synthia
-
-*Authors: [Geoff Khorn](https://github.com/gkhorn978), [Sarah Carroll](https://github.com/sarahes), and [Tom Carroll](https://github.com/TomAlanCarroll)*
-
-Synthia is a Synthetic Intelligent Assistant for your home.
-
-We love to give our homes unique personality with furniture, decor and lighting. But what if we could take that personalization futher and interact with our homes?
+# Synthia
+## The Synthetic Intelligent Assistant for your home.
 
 Synthia is an intelligent assistant that sends you off in the morning with helpful reminders, then welcomes you home at the end of each day. This is done using motion detection triggered by a camera built into a Raspberry Pi. If motion is detected within a certain time range in the morning or evening, it will trigger functions to play a customized message.
 
 Synthia is written in Python 2.7.
 
-## Prerequisites
+## Hardware Prerequisites
 1. Raspberry Pi 3 Model B with Raspbian Jessie
 1. Pi NoIR camera
 1. Bluetooth speaker (or 3.5mm powered speaker)
+1. Optional: PIR Sensor
 <div align="center">![Raspberry Pi and Speaker](synthia.jpg)</div>
 
 ## Setup
@@ -50,6 +46,6 @@ Synthia is written in Python 2.7.
 # How to Run
 Execute the following line on the Raspberry Pi:
 ```bash
-python synthia.py --conf conf.json
+python synthia.py
 ```
 The default configuration is to each day execute exactly one morning event between 6:00 and 10:00  and exactly one welcome home event between 18:00 and 23:00. These times are relative to the current time on the Raspberry Pi.

@@ -21,7 +21,11 @@ args = vars(ap.parse_args())
 
 # filter warnings, load the configuration
 warnings.filterwarnings("ignore")
-conf = json.load(open(args["conf"]))
+if args["conf"]:
+    conf = json.load(open(args["conf"]))
+else:
+    # Default to conf.json
+    conf = json.load(open("conf.json"))
 
 # PIR output should be connected to GPIO 4
 pir_sensor_detection = conf["pir_sensor_detection"]
