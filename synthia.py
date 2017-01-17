@@ -4,31 +4,15 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from gpiozero import MotionSensor
-import argparse
-import warnings
 import imutils
-import json
 import time
 import cv2
 import datetime
 import synthia_controller
-
-# construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-c", "--conf", required=True,
-                help="path to the JSON configuration file")
-args = vars(ap.parse_args())
-
-# filter warnings, load the configuration
-warnings.filterwarnings("ignore")
-if args["conf"]:
-    conf = json.load(open(args["conf"]))
-else:
-    # Default to conf.json
-    conf = json.load(open("conf.json"))
+import config
 
 # PIR output should be connected to GPIO 4
-pir_sensor_detection = conf["pir_sensor_detection"]
+pir_sensor_detection = config.pir_sensor_detection
 pir = None
 if pir_sensor_detection:
     print "[INFO] Initializing PIR sensor..."
@@ -36,17 +20,17 @@ if pir_sensor_detection:
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-camera.resolution = tuple(conf["resolution"])
-camera.framerate = conf["fps"]
-rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
-morning_time_min = conf["morning_time_min"]
-morning_time_max = conf["morning_time_max"]
-morning_reminder_message = conf["morning_reminder_message"]
-evening_time_min = conf["evening_time_min"]
-evening_time_max = conf["evening_time_max"]
-evening_song_path = conf["evening_song_path"]
-city = conf["city"]
-postal_code = conf["postal_code"]
+camera.resolution = tuple(config.resolution)
+camera.framerate = config.fps
+rawCapture = PiRGBArray(camera, size=tuple(config.resolution))
+morning_time_min = config.morning_time_min
+morning_time_max = config.morning_time_max
+morning_reminder_message = config.morning_reminder_message
+evening_time_min = config.evening_time_min
+evening_time_max = config.evening_time_max
+evening_song_path = config.evening_song_path
+city = config.city
+postal_code = config.postal_code
 morning_start = datetime.time(morning_time_min)
 morning_end = datetime.time(morning_time_max)
 evening_start = datetime.time(evening_time_min)
@@ -57,7 +41,7 @@ evening_message_played = 0
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
 print "[INFO] Starting camera server..."
-time.sleep(conf["camera_warmup_time"])
+time.sleep(config.camera_warmup_time)
 avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
@@ -94,7 +78,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
         # threshold the delta image, dilate the thresholded image to fill
         # in holes, then find contours on thresholded image
-        thresh = cv2.threshold(frameDelta, conf["delta_thresh"], 255,
+        thresh = cv2.threshold(frameDelta, config.delta_thresh, 255,
                                cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         (_, contours, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -102,7 +86,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         # loop over the contours
         for c in contours:
             # if the contour is too small, ignore it
-            if cv2.contourArea(c) < conf["min_area"]:
+            if cv2.contourArea(c) < config.min_area:
                 continue
 
             # compute the bounding box for the contour, draw it on the frame,
@@ -138,13 +122,13 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         # check to see if the room is opening for stream
         if text == "Opening":
             # check to see if enough time has passed between uploads
-            if (timestamp - lastUploaded).seconds >= conf["min_upload_seconds"]:
+            if (timestamp - lastUploaded).seconds >= config.min_upload_seconds:
                 # increment the motion counter
                 motionCounter += 1
 
                 # check to see if the number of frames with consistent motion is
                 # high enough
-                if motionCounter >= conf["min_motion_frames"]:
+                if motionCounter >= config.min_motion_frames:
                     # update the last uploaded timestamp and reset the motion
                     # counter
                     lastUploaded = timestamp
@@ -155,7 +139,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
             motionCounter = 0
 
     # check to see if the frames should be displayed to screen
-    if conf["show_video"]:
+    if config.show_video:
         # display the security feed
         cv2.imshow("Security Feed", frame)
         key = cv2.waitKey(1) & 0xFF

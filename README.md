@@ -39,7 +39,6 @@ Synthia is written in Python 2.7.
     dpkg -x latest-OpenCV.deb ./OpenCV
     cp OpenCV/usr/local/lib/python2.7/dist-packages/cv2.so synthia-virtualenv/local/lib/python2.7/site-packages/
     rm latest-OpenCV.deb
-    rm -rf OpenCV
     ```
 1. Configure the desired audio output device as the system's default on the Raspberry Pi
 
@@ -47,5 +46,8 @@ Synthia is written in Python 2.7.
 Execute the following line on the Raspberry Pi:
 ```bash
 python synthia.py
+
+or with a custom config:
+python synthia.py --config=my-config.json
 ```
 The default configuration is to each day execute exactly one morning event between 6:00 and 10:00  and exactly one welcome home event between 18:00 and 23:00. These times are relative to the current time on the Raspberry Pi.

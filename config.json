@@ -16,5 +16,11 @@
   	"evening_time_max": 23,
   	"evening_song_path": "songs/evening.m4a",
   	"city": "Berlin",
-	"postal_code": "10997"
+	"postal_code": "10997",
+	"haar_cascades_file": "OpenCV/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml",
+	"haar_scale_factor": 1.3,
+	"haar_min_neighbors": 4,
+	"haar_min_size": [30, 30],
+	"face_width": 92,
+	"face_height": 112
 }
