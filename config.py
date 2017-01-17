@@ -13,19 +13,19 @@ def to_node(type, message):
     print(json.dumps({type: message}))
     sys.stdout.flush()
 
-
-_platform = platform.uname()[4]
-path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-
-# filter warnings, load the configuration
-warnings.filterwarnings("ignore")
-
-# construct the argument parser and parse the arguments
+# Construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-c", "--config", required=False, help="path to the JSON configuration file")
+ap.add_argument("-c", "--config", required=False,
+      help="Optional path to the JSON configuration file; Default is config.json")
 args = vars(ap.parse_args())
 
-CONFIG = json.loads(args["config"]);
+# Filter warnings, load the configuration
+warnings.filterwarnings("ignore")
+if args["config"]:
+    CONFIG = json.load(open(args["config"]))
+else:
+    # Default to conf.json
+    CONFIG = json.load(open("config.json"))
 
 def get(key):
     return CONFIG[key]

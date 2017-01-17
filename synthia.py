@@ -12,7 +12,7 @@ import synthia_controller
 import config
 
 # PIR output should be connected to GPIO 4
-pir_sensor_detection = config.pir_sensor_detection
+pir_sensor_detection = config.get("pir_sensor_detection")
 pir = None
 if pir_sensor_detection:
     print "[INFO] Initializing PIR sensor..."
@@ -20,17 +20,17 @@ if pir_sensor_detection:
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-camera.resolution = tuple(config.resolution)
-camera.framerate = config.fps
-rawCapture = PiRGBArray(camera, size=tuple(config.resolution))
-morning_time_min = config.morning_time_min
-morning_time_max = config.morning_time_max
-morning_reminder_message = config.morning_reminder_message
-evening_time_min = config.evening_time_min
-evening_time_max = config.evening_time_max
-evening_song_path = config.evening_song_path
-city = config.city
-postal_code = config.postal_code
+camera.resolution = tuple(config.get("resolution"))
+camera.framerate = config.get("fps")
+rawCapture = PiRGBArray(camera, size=tuple(config.get("resolution")))
+morning_time_min = config.get("morning_time_min")
+morning_time_max = config.get("morning_time_max")
+morning_reminder_message = config.get("morning_reminder_message")
+evening_time_min = config.get("evening_time_min")
+evening_time_max = config.get("evening_time_max")
+evening_song_path = config.get("evening_song_path")
+city = config.get("city")
+postal_code = config.get("postal_code")
 morning_start = datetime.time(morning_time_min)
 morning_end = datetime.time(morning_time_max)
 evening_start = datetime.time(evening_time_min)
@@ -41,7 +41,7 @@ evening_message_played = 0
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
 print "[INFO] Starting camera server..."
-time.sleep(config.camera_warmup_time)
+time.sleep(config.get("camera_warmup_time"))
 avg = None
 lastUploaded = datetime.datetime.now()
 motionCounter = 0
@@ -78,7 +78,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
         # threshold the delta image, dilate the thresholded image to fill
         # in holes, then find contours on thresholded image
-        thresh = cv2.threshold(frameDelta, config.delta_thresh, 255,
+        thresh = cv2.threshold(frameDelta, config.get("delta_thresh"), 255,
                                cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         (_, contours, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -86,7 +86,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         # loop over the contours
         for c in contours:
             # if the contour is too small, ignore it
-            if cv2.contourArea(c) < config.min_area:
+            if cv2.contourArea(c) < config.get("min_area"):
                 continue
 
             # compute the bounding box for the contour, draw it on the frame,
@@ -122,13 +122,13 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         # check to see if the room is opening for stream
         if text == "Opening":
             # check to see if enough time has passed between uploads
-            if (timestamp - lastUploaded).seconds >= config.min_upload_seconds:
+            if (timestamp - lastUploaded).seconds >= config.get("min_upload_seconds"):
                 # increment the motion counter
                 motionCounter += 1
 
                 # check to see if the number of frames with consistent motion is
                 # high enough
-                if motionCounter >= config.min_motion_frames:
+                if motionCounter >= config.get("min_motion_frames"):
                     # update the last uploaded timestamp and reset the motion
                     # counter
                     lastUploaded = timestamp
@@ -139,7 +139,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
             motionCounter = 0
 
     # check to see if the frames should be displayed to screen
-    if config.show_video:
+    if config.get("show_video"):
         # display the security feed
         cv2.imshow("Security Feed", frame)
         key = cv2.waitKey(1) & 0xFF
