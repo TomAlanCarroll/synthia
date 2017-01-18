@@ -3,20 +3,27 @@ import config
 
 haar_faces = cv2.CascadeClassifier(config.get("haar_cascades_file"))
 
-
-def detect_single(image):
+def detect_multi(image):
     """Return bounds (x, y, width, height) of detected face in grayscale image.
     If no face or more than one face are detected, None is returned.
     """
     faces = haar_faces.detectMultiScale(image,
                                         scaleFactor=config.get("haar_scale_factor"),
                                         minNeighbors=config.get("haar_min_neighbors"),
-                                        minSize=config.get("haar_min_size"),
+                                        minSize=tuple(config.get("haar_min_size")),
                                         flags=cv2.CASCADE_SCALE_IMAGE)
-    if len(faces) != 1:
+    if len(faces) > 0:
+        return faces
+    else:
         return None
-    return faces[0]
 
+def detect_single(image):
+    faces = detect_single(image)
+
+    if faces is not None:
+        return faces[0]
+    else:
+        return None
 
 def crop(image, x, y, w, h):
     """Crop box defined by x, y (upper left corner) and w, h (width and height)
@@ -28,7 +35,6 @@ def crop(image, x, y, w, h):
     y1 = max(0, midy - crop_height / 2)
     y2 = min(image.shape[0] - 1, midy + crop_height / 2)
     return image[y1:y2, x:x + w]
-
 
 def resize(image):
     """Resize a face image to the proper size for training and detection.

@@ -4,6 +4,7 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from gpiozero import MotionSensor
+from face import detection
 import imutils
 import time
 import cv2
@@ -61,7 +62,6 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     if not pir_sensor_detection or (pir is not None and pir.motion_detected):
         # convert it to grayscale and blur it
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
         # if the average frame is None, initialize it
         if avg is None:
@@ -70,29 +70,12 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
             rawCapture.truncate(0)
             continue
 
-        # accumulate the weighted average between the current frame and
-        # previous frames, then compute the difference between the current
-        # frame and running average
-        cv2.accumulateWeighted(gray, avg, 0.5)
-        frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(avg))
+        faces = detection.detect_multi(gray)
 
-        # threshold the delta image, dilate the thresholded image to fill
-        # in holes, then find contours on thresholded image
-        thresh = cv2.threshold(frameDelta, config.get("delta_thresh"), 255,
-                               cv2.THRESH_BINARY)[1]
-        thresh = cv2.dilate(thresh, None, iterations=2)
-        (_, contours, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        # loop over the contours
-        for c in contours:
-            # if the contour is too small, ignore it
-            if cv2.contourArea(c) < config.get("min_area"):
-                continue
-
-            # compute the bounding box for the contour, draw it on the frame,
-            # and update the text
-            (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        if faces is not None and len(faces) > 0:
+            for (x, y, w, h) in faces:
+                # draw the face boundary(s) on the frame in blue
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
             text = "Opening"
 
         # check to see if the room is opening
