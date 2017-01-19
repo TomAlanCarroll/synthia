@@ -45,7 +45,11 @@ print "[INFO] Starting camera server..."
 time.sleep(config.get("camera_warmup_time"))
 avg = None
 lastUploaded = datetime.datetime.now()
+pir_detection_period_seconds = 6
 motionCounter = 0
+motion_detection_counter = 1
+now = datetime.datetime.now()
+endScanTime = now
 
 if pir is not None:
     print "[INFO] Waiting for PIR warmup..."
@@ -59,16 +63,14 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     text = "No movement"
     # resize the frame
     frame = imutils.resize(frame, width=500)
-    if not pir_sensor_detection or (pir is not None and pir.motion_detected):
-        # convert it to grayscale and blur it
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    now = datetime.datetime.now()
+    if (not pir_sensor_detection or (pir is not None and pir.motion_detected)) or now < endScanTime:
+        motion_detection_counter += 1
+        print "[INFO] Motion detected within the past " + str(pir_detection_period_seconds) + " seconds; counter: " + str(motion_detection_counter)
+        endScanTime = now + datetime.timedelta(seconds=pir_detection_period_seconds)
 
-        # if the average frame is None, initialize it
-        if avg is None:
-            print "[INFO] Starting camera framing..."
-            avg = gray.copy().astype("float")
-            rawCapture.truncate(0)
-            continue
+        # convert it to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         faces = detection.detect_multi(gray)
 
