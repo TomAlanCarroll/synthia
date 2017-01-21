@@ -9,7 +9,7 @@ Synthia is written in Python 2.7.
 1. Raspberry Pi 3 Model B with Raspbian Jessie
 1. Pi NoIR camera
 1. Bluetooth speaker (or 3.5mm powered speaker)
-1. Optional: PIR Sensor
+1. Optional: PIR Sensor (to only process images when movement is detected)
 <div align="center">![Raspberry Pi and Speaker](synthia.jpg)</div>
 
 ## Setup
@@ -41,13 +41,14 @@ Synthia is written in Python 2.7.
     rm latest-OpenCV.deb
     ```
 1. Configure the desired audio output device as the system's default on the Raspberry Pi
+1. Set the correct timezone on the Raspberry Pi
 
 # How to Run
 Execute the following line on the Raspberry Pi:
 ```bash
 python synthia.py
 
-or with a custom config:
+# or with a custom config:
 python synthia.py --config=my-config.json
 ```
 The default configuration is to each day execute exactly one morning event between 6:00 and 10:00  and exactly one welcome home event between 18:00 and 23:00. These times are relative to the current time on the Raspberry Pi.

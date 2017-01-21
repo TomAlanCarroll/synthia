@@ -91,5 +91,8 @@ synthia-virtualenv/
 # Rope project settings
 .ropeproject
 
-#OpenCV (needed for Haar Cascades file)
+# OpenCV (needed for Haar Cascades file)
 OpenCV/
+
+# Custom config
+my-config.json
