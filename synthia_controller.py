@@ -2,7 +2,7 @@
     Synthia Controller
 """
 from flask import Flask
-import weather, requests, json, audio_controller
+import requests, json, audio_controller, config
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def play_morning_message():
 def get_morning_message():
     message = 'Good morning! '
 
-    result = requests.get(weather.API_END_POINT);
+    result = requests.get(config.get("weather_endpoint"));
     content = result.content
     data = json.loads(content)
 
@@ -38,10 +38,10 @@ def get_morning_message():
 
 # Returns a message based off the current weather
 def get_current_weather_reminder_message(current_weather):
-    if current_weather == weather.DRIZZLE or current_weather == weather.RAIN:
+    if current_weather == config.get("drizzle") or current_weather == config.get("rain"):
         return 'You should bring an umbrella. '
 
-    if current_weather == weather.SUNNY:
+    if current_weather == config.get("sunny"):
         return 'You should wear sunglasses. '
 
     return ''
