@@ -78,15 +78,15 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
             for (x, y, w, h) in faces:
                 # draw the face boundary(s) on the frame in blue
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            text = "Opening"
+            state = "Opening"
 
         # check to see if the room is opening
-        if text == "Opening" and morning_start <= timestamp.time() <= morning_end \
+        if state == "Opening" and morning_start <= timestamp.time() <= morning_end \
                 and morning_message_played < 1:
             synthia_controller.play_morning_message()
             morning_message_played = 1
 
-        if text == "Opening" and evening_start <= timestamp.time() <= evening_end \
+        if state == "Opening" and evening_start <= timestamp.time() <= evening_end \
                 and evening_message_played < 1:
             synthia_controller.play_evening_message()
             evening_message_played = 1
@@ -105,7 +105,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                     0.35, (0, 0, 255), 1)
 
         # check to see if the room is opening for stream
-        if text == "Opening":
+        if state == "Opening":
             # check to see if enough time has passed between uploads
             if (timestamp - lastUploaded).seconds >= config.get("min_upload_seconds"):
                 # increment the motion counter
