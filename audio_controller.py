@@ -1,6 +1,4 @@
 import sys
-import os.path
-import os
 from gtts import gTTS
 from subprocess import call
 from playsound import playsound
