@@ -3,11 +3,8 @@
 """
 import argparse
 import warnings
-import inspect
-import os
 import json
 import sys
-import platform
 
 def to_node(type, message):
     print(json.dumps({type: message}))
