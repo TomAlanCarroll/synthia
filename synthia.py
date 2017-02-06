@@ -19,6 +19,11 @@ if pir_sensor_detection:
     print "[INFO] Initializing PIR sensor..."
     pir = MotionSensor(4)
 
+alexa_voice_service = config.get("alexa_voice_service")
+if alexa_voice_service:
+    print "[INFO] Initializing AVS..."
+    # TODO: Initialize AVS
+
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.resolution = tuple(config.get("resolution"))

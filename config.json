@@ -1,5 +1,6 @@
 {
 	"pir_sensor_detection": true,
+	"alexa_voice_service": false,
 	"show_video": false,
 	"min_upload_seconds": 3.0,
 	"min_motion_frames": 8,
