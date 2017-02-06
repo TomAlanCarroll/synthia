@@ -65,7 +65,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     # the timestamp and status text
     frame = f.array
     timestamp = datetime.datetime.now()
-    text = "No movement"
+    state = "No movement"
     # resize the frame
     frame = imutils.resize(frame, width=500)
     now = datetime.datetime.now()
