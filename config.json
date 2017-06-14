@@ -1,7 +1,7 @@
 {
 	"pir_sensor_detection": true,
 	"alexa_voice_service": false,
-	"show_video": false,
+	"show_video": true,
 	"min_upload_seconds": 3.0,
 	"min_motion_frames": 8,
 	"camera_warmup_time": 2.5,
@@ -13,7 +13,7 @@
 	"morning_time_min": 6,
   	"morning_time_max": 10,
     "morning_reminder_message": "Don't forget your keys",
-	"evening_time_min": 18,
+	"evening_time_min": 16,
   	"evening_time_max": 23,
   	"evening_song_path": "songs/evening.m4a",
   	"city": "Berlin",
@@ -29,5 +29,7 @@
 	"haar_min_neighbors": 4,
 	"haar_min_size": [30, 30],
 	"face_width": 92,
-	"face_height": 112
+	"face_height": 112,
+	"aws_access_key_id": "!!ADD YOUR AWS ACCESS KEY ID HERE!!",
+	"aws_secret_access_key": "!!ADD YOUR AWS SECRET ACCESS KEY HERE!!"
 }
