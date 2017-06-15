@@ -14,6 +14,8 @@ def to_node(type, message):
 ap = argparse.ArgumentParser()
 ap.add_argument("-c", "--config", required=False,
       help="Optional path to the JSON configuration file; Default is config.json")
+ap.add_argument('-u', '--user', required=False,
+      help='Name of user to create collection for (no spaces)')
 args = vars(ap.parse_args())
 
 # Filter warnings, load the configuration
