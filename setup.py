@@ -36,6 +36,17 @@ def add_face_to_collection(client, source, collection_id, external_image_id):
     return response
 
 
+def test_face_collection(client, source, collection_id):
+    with open(source, 'rb') as source_image:
+        source_bytes = source_image.read()
+
+    response = client.search_faces_by_image(
+        CollectionId = collection_id,
+        Image = {'Bytes' : source_bytes}
+    )
+    return response
+
+
 if __name__ == '__main__':
     if not args['user']:
         print("Please provide user argument (for help run: setup.py --help)")
@@ -72,4 +83,12 @@ if __name__ == '__main__':
         capture_filename = username + '.jpg'
         camera.capture(capture_filename)
         response = add_face_to_collection(client, capture_filename, username, capture_filename)
+        pprint.pprint(response)
+
+        # Test the image by searching for another
+        print('Testing search in 1 ...')
+        time.sleep(1)
+        capture_test_filename = username + '_test.jpg'
+        camera.capture(capture_test_filename)
+        response = test_face_collection(client, capture_test_filename, username)
         pprint.pprint(response)
