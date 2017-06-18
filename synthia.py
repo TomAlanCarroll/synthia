@@ -5,6 +5,8 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from gpiozero import MotionSensor
 from face import detection
+from face import recognition
+import sys
 import imutils
 import time
 import cv2
@@ -80,6 +82,13 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         faces = detection.detect_multi(gray)
 
         if faces is not None and len(faces) > 0:
+            username = recognition.get_username_from_image(frame)
+            if username is not None:
+                print('recognized ' + username)
+                synthia_controller.play_welcome_message(username)
+            else:
+                print('no faces recognized')
+            sys.exit()
             for (x, y, w, h) in faces:
                 # draw the face boundary(s) on the frame in blue
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -93,8 +102,9 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
 
         if state == "Opening" and evening_start <= timestamp.time() <= evening_end \
                 and evening_message_played < 1:
-            synthia_controller.play_evening_message()
+            #synthia_controller.play_evening_message()
             evening_message_played = 1
+            print "face detected"
 
         if not morning_start <= timestamp.time() <= morning_end:
             morning_message_played = 0

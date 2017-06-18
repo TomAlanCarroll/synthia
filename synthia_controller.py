@@ -6,6 +6,10 @@ import requests, json, audio_controller, config
 
 app = Flask(__name__)
 
+def play_welcome_message(username):
+    audio_file = 'clips/Welcome_' + username + '.mp3'
+    audio_controller.play_audio_file(audio_file)
+
 # Calls a function to get a customer morning message, then plays it
 def play_morning_message():
     message = get_morning_message()
