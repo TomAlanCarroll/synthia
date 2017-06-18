@@ -96,3 +96,8 @@ OpenCV/
 
 # Custom config
 my-config.json
+
+# Config file which Synthia reads/writes to
+config.ini
+
+clips/
