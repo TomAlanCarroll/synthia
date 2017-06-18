@@ -32,5 +32,6 @@
 	"face_height": 112,
 	"aws_access_key_id": "!!ADD YOUR AWS ACCESS KEY ID HERE!!",
  	"aws_secret_access_key": "!!ADD YOUR AWS SECRET ACCESS KEY HERE!!",
-	"aws_region": "eu-west-1"
+	"aws_region": "eu-west-1",
+	"aws_polly_voice": "Emma"
 }
