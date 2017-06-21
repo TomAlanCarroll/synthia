@@ -43,6 +43,12 @@ Synthia is written in Python 2.7.
 1. Configure the desired audio output device as the system's default on the Raspberry Pi
 1. Set the correct timezone on the Raspberry Pi
 
+# How to Setup
+Execute the following line on the Raspberry Pi:
+```bash
+# or with a custom config:
+python synthia.py --config=my-config.json --user=<YOUR_NAME>
+```
 # How to Run
 Execute the following line on the Raspberry Pi:
 ```bash
