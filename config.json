@@ -33,5 +33,7 @@
 	"aws_access_key_id": "!!ADD YOUR AWS ACCESS KEY ID HERE!!",
  	"aws_secret_access_key": "!!ADD YOUR AWS SECRET ACCESS KEY HERE!!",
 	"aws_region": "eu-west-1",
-	"aws_polly_voice": "Emma"
+	"aws_polly_voice": "Emma",
+	"mirobo_ip": "192.168.8.1",
+	"mirobo_token": "476e6b70343055483230644c53707a12"
 }
