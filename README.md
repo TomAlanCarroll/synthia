@@ -18,12 +18,13 @@ Synthia is written in Python 2.7.
 1. Install `virtualenv` for Python if you have not already done so by running `sudo pip install virtualenv`.
 1. Run the following commands to setup `virtualenv` within this repository folder on the Raspberry Pi:
     ```bash
-    sudo apt-get install python-dev
+    sudo apt-get install python-dev python-pyaudio python3-pyaudio python-all-dev portaudio19-dev libjpeg-dev
 
     # Needed for text-to-speech
     sudo apt-get install mpg321
 
     # Setup virtualenv (change directory to repository directory if you haven't already)
+    pip install virtualenv
     virtualenv --no-site-packages synthia-virtualenv
     source synthia-virtualenv/bin/activate
 
