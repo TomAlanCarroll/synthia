@@ -6,6 +6,7 @@ from picamera import PiCamera
 from gpiozero import MotionSensor
 from face import detection
 from face import recognition
+from devices import xiaomi_mi_vacuum
 import sys
 import imutils
 import time
@@ -87,6 +88,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                 print('Recognized ' + username)
                 state = 'Recognized'
                 synthia_controller.play_welcome_message(username)
+                xiaomi_mi_vacuum.clean()
             else:
                 'Not Recognized'
                 print('no faces recognized')

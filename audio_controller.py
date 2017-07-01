@@ -1,7 +1,6 @@
 import sys
 import vlc
 from gtts import gTTS
-from subprocess import call
 from playsound import playsound
 
 # Plays audio file default audio device
