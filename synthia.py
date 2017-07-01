@@ -84,27 +84,28 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         if faces is not None and len(faces) > 0:
             username = recognition.get_username_from_image(frame)
             if username is not None:
-                print('recognized ' + username)
+                print('Recognized ' + username)
+                state = 'Recognized'
                 synthia_controller.play_welcome_message(username)
             else:
+                'Not Recognized'
                 print('no faces recognized')
-            sys.exit()
+                
             for (x, y, w, h) in faces:
                 # draw the face boundary(s) on the frame in blue
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            state = "Opening"
+            
 
-        # check to see if the room is opening
-        if state == "Opening" and morning_start <= timestamp.time() <= morning_end \
+        # check to see if someone is recognized
+        if state == 'Recognized' and morning_start <= timestamp.time() <= morning_end \
                 and morning_message_played < 1:
-            synthia_controller.play_morning_message()
+            #synthia_controller.play_morning_message()
             morning_message_played = 1
 
-        if state == "Opening" and evening_start <= timestamp.time() <= evening_end \
+        if state == 'Recognized' and evening_start <= timestamp.time() <= evening_end \
                 and evening_message_played < 1:
             #synthia_controller.play_evening_message()
             evening_message_played = 1
-            print "face detected"
 
         if not morning_start <= timestamp.time() <= morning_end:
             morning_message_played = 0
@@ -119,8 +120,8 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
         cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX,
                     0.35, (0, 0, 255), 1)
 
-        # check to see if the room is opening for stream
-        if state == "Opening":
+        # check to see if the person is recognized in video stream
+        if state == 'Recognized':
             # check to see if enough time has passed between uploads
             if (timestamp - lastUploaded).seconds >= config.get("min_upload_seconds"):
                 # increment the motion counter
@@ -134,7 +135,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                     lastUploaded = timestamp
                     motionCounter = 0
 
-        # otherwise, the door is not opening
+        # otherwise, the 
         else:
             motionCounter = 0
 

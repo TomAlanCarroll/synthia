@@ -1,10 +1,7 @@
 """
     Synthia Controller
 """
-from flask import Flask
 import requests, json, audio_controller, config
-
-app = Flask(__name__)
 
 def play_welcome_message(username):
     audio_file = 'clips/Welcome_' + username + '.mp3'

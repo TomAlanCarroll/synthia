@@ -1,7 +1,6 @@
 Jinja2==2.8
 MarkupSafe==0.23
 Pillow==3.4.2
-PyAudio==0.2.9
 Werkzeug==0.11.11
 argparse==1.2.1
 click==6.6
@@ -11,7 +10,7 @@ imutils==0.3.6
 itsdangerous==0.24
 numpy==1.11.2
 picamera==1.12
-playsound==1.2.1
+python-vlc==1.1.2
 pydub==0.16.6
 python-dateutil==2.6.0
 requests==2.12.3

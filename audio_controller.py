@@ -1,19 +1,13 @@
 import sys
+import vlc
 from gtts import gTTS
 from subprocess import call
 from playsound import playsound
 
 # Plays audio file default audio device
 def play_audio_file(audio_file):
-    # linux2 matches RPi system
-    if sys.platform == "linux2":
-        # using shell call as quick a dirty way to play mp3 on a raspberry pi
-        print "playing audio file: " + audio_file
-        call(["mpg321", audio_file])
-
-    else:
-        print "playing audio file: " + audio_file
-        playsound(audio_file)
+    p = vlc.MediaPlayer(audio_file)
+    p.play()
 
 # Plays message as audio through default audio device
 def play_message(message, language="en-us"):
