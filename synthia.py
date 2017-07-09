@@ -14,6 +14,7 @@ import cv2
 import datetime
 import synthia_controller
 import config
+from wakeword import wakeword
 
 # PIR output should be connected to GPIO 4
 pir_sensor_detection = config.get("pir_sensor_detection")

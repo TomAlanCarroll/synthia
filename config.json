@@ -34,5 +34,6 @@
  	"aws_secret_access_key": "!!ADD YOUR AWS SECRET ACCESS KEY HERE!!",
 	"aws_region": "eu-west-1",
 	"aws_polly_voice": "Emma",
-	"mirobo_nickname": "vacuum"
+	"mirobo_nickname": "vacuum",
+	"snowboy_model": "wakeword/resources/synthia.pmdl"
 }
