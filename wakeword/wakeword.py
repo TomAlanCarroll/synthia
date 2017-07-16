@@ -2,30 +2,24 @@ import snowboydecoder
 import sys
 import signal
 import config
-
-interrupted = False
-
-
-def signal_handler(signal, frame):
-    global interrupted
-    interrupted = True
-
+from threading import Thread
 
 def interrupt_callback():
-    global interrupted
-    return interrupted
+    return False
 
-model = config.get('snowboy_model')
+def listen_for_wakeword():
+	model = config.get('snowboy_model')
 
-# capture SIGINT signal, e.g., Ctrl+C
-signal.signal(signal.SIGINT, signal_handler)
+	detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
 
-detector = snowboydecoder.HotwordDetector(model, sensitivity=0.5)
-print('Listening... Press Ctrl+C to exit')
-
-# main loop
-detector.start(detected_callback=snowboydecoder.play_audio_file,
+	print('Listening... Press Ctrl+C to exit')
+	detector.start(detected_callback=snowboydecoder.play_audio_file_and_record,
                interrupt_check=interrupt_callback,
                sleep_time=0.03)
 
-detector.terminate()
+	detector.terminate()
+
+# main loop
+wakeword_thread = Thread(target = listen_for_wakeword)
+wakeword_thread.daemon = True
+wakeword_thread.start()

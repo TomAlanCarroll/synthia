@@ -7,6 +7,7 @@ import time
 import wave
 import os
 import logging
+from synthia_assistant import recognize_speech
 
 logging.basicConfig()
 logger = logging.getLogger("snowboy")
@@ -34,13 +35,14 @@ class RingBuffer(object):
         return tmp
 
 
-def play_audio_file(fname=DETECT_DING):
+def play_audio_file_and_record(fname=DETECT_DING):
     """Simple callback function to play a wave file. By default it plays
     a Ding sound.
 
     :param str fname: wave file name
     :return: None
     """
+    print("start of ding")
     ding_wav = wave.open(fname, 'rb')
     ding_data = ding_wav.readframes(ding_wav.getnframes())
     audio = pyaudio.PyAudio()
@@ -54,6 +56,9 @@ def play_audio_file(fname=DETECT_DING):
     stream_out.stop_stream()
     stream_out.close()
     audio.terminate()
+    print("end of ding, recording")
+    print("end of recording")
+    recognize_speech()
 
 
 class HotwordDetector(object):
@@ -115,7 +120,7 @@ class HotwordDetector(object):
             stream_callback=audio_callback)
 
 
-    def start(self, detected_callback=play_audio_file,
+    def start(self, detected_callback=play_audio_file_and_record,
               interrupt_check=lambda: False,
               sleep_time=0.03):
         """

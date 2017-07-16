@@ -12,6 +12,8 @@ client = boto3.client('rekognition',
 
 def get_username_from_image(image):
 	global called_aws
+
+	# TODO: rate limit AWS instead of only allowing one call
 	if not called_aws:
 		im = Image.fromarray(image)
 		im.save('rekognition.jpg', 'JPEG')

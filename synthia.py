@@ -75,7 +75,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     now = datetime.datetime.now()
     if (not pir_sensor_detection or (pir is not None and pir.motion_detected)) or now < endScanTime:
         motion_detection_counter += 1
-        print "[INFO] Motion detected within the past " + str(pir_detection_period_seconds) + " seconds; counter: " + str(motion_detection_counter)
+        #print "[INFO] Motion detected within the past " + str(pir_detection_period_seconds) + " seconds; counter: " + str(motion_detection_counter)
         endScanTime = now + datetime.timedelta(seconds=pir_detection_period_seconds)
 
         # convert it to grayscale
@@ -89,7 +89,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                 print('Recognized ' + username)
                 state = 'Recognized'
                 synthia_controller.play_welcome_message(username)
-                xiaomi_mi_vacuum.clean()
+                # xiaomi_mi_vacuum.clean()
             else:
                 'Not Recognized'
                 print('no faces recognized')

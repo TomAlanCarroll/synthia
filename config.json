@@ -30,6 +30,7 @@
 	"haar_min_size": [30, 30],
 	"face_width": 92,
 	"face_height": 112,
+	"google_cloud_api_service_account_json": "!!ADD YOUR GOOGLE CLOUD API SERVICE ACCOUNT KEY JSON FILENAME HERE!!",
 	"aws_access_key_id": "!!ADD YOUR AWS ACCESS KEY ID HERE!!",
  	"aws_secret_access_key": "!!ADD YOUR AWS SECRET ACCESS KEY HERE!!",
 	"aws_region": "eu-west-1",
