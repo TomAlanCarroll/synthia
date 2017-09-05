@@ -11,7 +11,10 @@ Synthia is written in Python 2.7.
 1. Bluetooth speaker (or 3.5mm powered speaker)
 1. Optional: PIR Sensor (to only process images when movement is detected)
 
-<div align="center">![Raspberry Pi and Speaker](synthia.jpg)</div>
+<div align="center">
+
+![Raspberry Pi and Speaker](synthia.jpg)
+</div>
 
 ## Setup
 1. Install Python 2.7 on Raspberry Pi
