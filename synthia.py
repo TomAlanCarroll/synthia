@@ -20,12 +20,12 @@ from wakeword import wakeword
 pir_sensor_detection = config.get("pir_sensor_detection")
 pir = None
 if pir_sensor_detection:
-    print "[INFO] Initializing PIR sensor..."
+    print('[INFO] Initializing PIR sensor...')
     pir = MotionSensor(4)
 
 alexa_voice_service = config.get("alexa_voice_service")
 if alexa_voice_service:
-    print "[INFO] Initializing AVS..."
+    print('[INFO] Initializing AVS...')
     # TODO: Initialize AVS
 
 # initialize the camera and grab a reference to the raw camera capture
@@ -50,7 +50,7 @@ evening_message_played = 0
 
 # allow the camera to warmup, then initialize the average frame, last
 # uploaded timestamp, and frame motion counter
-print "[INFO] Starting camera server..."
+print('[INFO] Starting camera server...')
 time.sleep(config.get("camera_warmup_time"))
 avg = None
 lastUploaded = datetime.datetime.now()
@@ -61,7 +61,7 @@ now = datetime.datetime.now()
 endScanTime = now
 
 if pir is not None:
-    print "[INFO] Waiting for PIR warmup..."
+    print('[INFO] Waiting for PIR warmup...')
 
 # Main control loop for processing camera images
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -75,7 +75,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     now = datetime.datetime.now()
     if (not pir_sensor_detection or (pir is not None and pir.motion_detected)) or now < endScanTime:
         motion_detection_counter += 1
-        #print "[INFO] Motion detected within the past " + str(pir_detection_period_seconds) + " seconds; counter: " + str(motion_detection_counter)
+        #print("[INFO] Motion detected within the past " + str(pir_detection_period_seconds) + " seconds; counter: " + str(motion_detection_counter))
         endScanTime = now + datetime.timedelta(seconds=pir_detection_period_seconds)
 
         # convert it to grayscale

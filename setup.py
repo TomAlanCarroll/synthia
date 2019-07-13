@@ -93,7 +93,7 @@ if __name__ == '__main__':
         sys.exit()
 
     username = args['user']
-    print (username)
+    print(username)
 
     add_username_to_config_ini(username)
 
