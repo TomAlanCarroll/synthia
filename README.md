@@ -18,7 +18,29 @@ Synthia is an intelligent assistant that sends you off in the morning with helpf
 1. Set the correct timezone on the Raspberry Pi
 1. Load this repository to /home/pi on the Raspberry Pi and run:
 ```bash
-/home/pi/_install.sh
+cd /home/pi/synthia
+# Setup virtualenv
+sudo pip install --upgrade pip
+sudo pip install virtualenv
+virtualenv --no-site-packages venv
+source /home/pi/synthia/venv/bin/activate
+
+# System requirements for synthia & snips (done once)
+sudo ./_install.sh
+
+# Snips assistant install, replace the parameter file with your zip file downloaded from snips.ai
+sudo ./_snips_install.sh /home/pi/Downloads/<assistant-zip-filename>.zip
+
+# Snips skills install
+sudo rm -r /var/lib/snips/skills/*
+cp -f /home/pi/synthia/_snips_skills_install.sh /home/pi/synthia/snips_skills_install.sh
+sudo chown _snips-skills:_snips-skills /home/pi/synthia/snips_skills_install.sh
+sudo chown _snips-skills:_snips-skills /var/lib/snips/skills
+sudo -u _snips-skills -s
+# Replace the parameters for your API key and location
+/home/pi/synthia/snips_skills_install.sh <omw-api-key> <omw-location>
+exit
+sudo systemctl restart 'snips-*'
 ```
 
 # How to Setup
