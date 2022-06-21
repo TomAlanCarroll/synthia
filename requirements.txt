@@ -8,7 +8,7 @@ gTTS==1.1.6
 gTTS-token==1.1.1
 imutils==0.3.6
 itsdangerous==0.24
-numpy==1.11.2
+numpy==1.22.0
 picamera==1.12
 python-vlc==1.1.2
 pydub==0.16.6
